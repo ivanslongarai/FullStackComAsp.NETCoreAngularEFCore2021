@@ -14,7 +14,6 @@ public class Player : IPlayer
         {
             return $"{Nome} está Chutando";
         }
-
         public string Correr()
         {
             return $"{Nome} está Correndo";
