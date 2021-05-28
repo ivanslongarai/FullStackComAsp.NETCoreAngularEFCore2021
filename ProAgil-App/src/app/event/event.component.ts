@@ -4,6 +4,7 @@ import { Event } from '../_models/Event';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsLocaleService, } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-event',
@@ -13,11 +14,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class EventComponent implements OnInit {
   filteredEvents: Event[] = [];
   events: Event[] = [];
-  imageWidth = 50;
+  event!: Event;
+  imageWidth = 32;
   imageMargin = 2;
-  showImages = false;
-  modalRef!: BsModalRef;
+  showImages = true;
   registerForm!: FormGroup;
+  saveMode = "";
+  bodyDeleteEvent = "";
 
   actualDate = '';
   _filterList = '';
@@ -25,8 +28,12 @@ export class EventComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private modalService: BsModalService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private LocaleService: BsLocaleService,
+  )
+  {
+    this.LocaleService.use('pt-br');
+  }
 
   get filterList() {
     return this._filterList;
@@ -55,7 +62,63 @@ export class EventComponent implements OnInit {
     });
   }
 
-  saveUpdates() {}
+  newEvent(template: any){
+    this.openModal(template);
+    this.saveMode = "post";
+  }
+
+  editEvent(event: Event, template : any){
+    this.openModal(template);
+    this.saveMode = "put";
+    this.event = event;
+    this.registerForm.patchValue(this.event);
+  }
+
+  deleteEvent(event: Event, template: any) {
+    this.openModal(template);
+    this.event = event;
+    this.bodyDeleteEvent = `Tem certeza que deseja excluir o Evento: ${event.subject}, Código: ${event.id}`;
+  }
+
+  confirmDelete(template: any) {
+    this.eventService.deleteEvent(this.event.id).subscribe(
+      () => {
+          template.hide();
+          this.getEvents();
+        }, error => {
+          console.log(error);
+        }
+    );
+  }
+
+  saveUpdates(template: any) {
+    if(this.registerForm.valid)
+    {
+      if(this.saveMode === "post"){
+        this.event = Object.assign({}, this.registerForm.value);
+        this.eventService.postEvent(this.event).subscribe(newEvent => {
+          console.log(this.event);
+              template.hide();
+              this.getEvents();
+            }, error => {
+              console.log(error)
+            }
+        );
+      }
+      else
+      if(this.saveMode === "put"){
+        this.event = Object.assign({id: this.event.id}, this.registerForm.value);
+        console.log(this.event);
+        this.eventService.putEvent(this.event).subscribe(newEvent => {
+              template.hide();
+              this.getEvents();
+            }, error => {
+              console.log(error)
+            }
+        );
+      }
+    }
+  }
 
   set filterList(filterBy: string) {
     this._filterList = filterBy;
@@ -64,8 +127,9 @@ export class EventComponent implements OnInit {
       : this.events;
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModal(template: any) {
+    this.registerForm.reset();
+    template.show();
   }
 
   filterEvents(filterBy: string): Event[] {
