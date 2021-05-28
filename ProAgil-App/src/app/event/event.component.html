@@ -80,3 +80,97 @@
     This a modal.
   </div>
 </ng-template>
+
+<form [formGroup]="registerForm">
+  <div class="row">
+
+    <div class="form-group col-md-12">
+      <label>Tema</label>
+      <input type="text" class="form-control" formControlName="subject" placeholder=" Informe o Tema"
+        [ngClass]="{'is-invalid' : !registerForm.controls.subject.valid && registerForm.controls.subject.touched}">
+      <div *ngIf="registerForm.controls.subject.hasError('required')" class="invalid-feedback">
+        Tema é obrigatório
+      </div>
+      <div *ngIf="registerForm.controls.subject.hasError('minlength')" class="invalid-feedback">
+        Ter no mínimo 4 caracteres
+      </div>
+      <div *ngIf="registerForm.controls.subject.hasError('maxlength')" class="invalid-feedback">
+        Ter no máximo 50 caracteres
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label>Local</label>
+      <input type="text" class="form-control is-invalid" formControlName="local" placeholder=" Informe o Local"
+      [ngClass]="{'is-invalid' : !registerForm.controls.local.valid && registerForm.controls.local.touched}">
+      <div class="invalid-feedback">
+        Local é obrigatório
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label>Data e Hora</label>
+      <input type="text" class="form-control is-invalid" formControlName="date" placeholder=" Informe o Data e Hora"
+      [ngClass]="{'is-invalid' : !registerForm.controls.date.valid && registerForm.controls.date.touched}">
+      <div class="invalid-feedback">
+        Data e Hora é Obrigatório
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label>Qtd Pessoas</label>
+      <input type="text" class="form-control is-invalid" formControlName="amount" placeholder=" Informe a Qtd de pessoas"
+      [ngClass]="{'is-invalid' : !registerForm.controls.amount.valid && registerForm.controls.amount.touched}">
+      <div *ngIf="registerForm.controls.amount.hasError('required')" class="invalid-feedback">
+        Qtd Pessoas é obrigatório
+      </div>
+      <div *ngIf="registerForm.controls.amount.hasError('min')" class="invalid-feedback">
+        Valor mínimo 1
+      </div>
+      <div *ngIf="registerForm.controls.amount.hasError('max')" class="invalid-feedback">
+        Valor máximo máximo 120000
+      </div>
+    </div>
+    <div class="form-group col-md-9">
+      <label>Imagem</label>
+      <input type="text" class="form-control is-invalid" formControlName="imageUrl" placeholder=" Informe o ulr da Imagem"
+      [ngClass]="{'is-invalid' : !registerForm.controls.imageUrl.valid && registerForm.controls.imageUrl.touched}">
+      <div class="invalid-feedback">
+        Imagem é obrigatório
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label>Telefone</label>
+      <input type="text" class="form-control is-invalid" formControlName="phone" placeholder=" Informe o Telefone"
+      [ngClass]="{'is-invalid' : !registerForm.controls.phone.valid && registerForm.controls.phone.touched}">
+      <div class="invalid-feedback">
+        O Telefone é obrigatório
+      </div>
+    </div>
+    <div class="form-group col-md-8">
+      <label>Email</label>
+      <input type="text" class="form-control is-invalid" formControlName="email" placeholder=" Informe o Email"
+      [ngClass]="{'is-invalid' : !registerForm.controls.email.valid && registerForm.controls.email.touched}">
+      <div *ngIf="registerForm.controls.email.hasError('required')" class="invalid-feedback">
+        Email é obrigatório
+      </div>
+      <div *ngIf="registerForm.controls.email.hasError('pattern')" class="invalid-feedback">
+        Email inválido
+      </div>
+    </div>
+  </div>
+</form>
+<br>
+
+<button class="btn btn-secondary border" (click)="openModal(template)">
+  Fechar
+</button>
+<button class="btn btn-primary border" (click)="saveUpdates()">
+  Salvar Alterações
+</button>
+<br>
+<br>
