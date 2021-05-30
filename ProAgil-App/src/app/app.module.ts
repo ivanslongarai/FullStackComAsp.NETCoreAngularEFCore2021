@@ -16,8 +16,12 @@ import { EventService } from './_services/Event.service';
 
 //Components
 import { AppComponent } from './app.component';
-import { EventComponent } from './event/event.component';
 import { NavComponent } from './nav/nav.component';
+import { EventComponent } from './event/event.component';
+import { SpeakerComponent } from './speaker/speaker.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactComponent } from './contact/contact.component';
+import { TitleComponent } from "./_shared/title/title.component";
 
 //Locale
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -25,6 +29,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 
 //Pipes
 import { DateTimeFormatPipePipe } from './_helpers/DateTimeFormatPipe.pipe';
+
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -34,7 +39,11 @@ defineLocale('pt-br', ptBrLocale);
     EventComponent,
     NavComponent,
     DateTimeFormatPipePipe,
-  ],
+    SpeakerComponent,
+    DashboardComponent,
+    ContactComponent,
+    TitleComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

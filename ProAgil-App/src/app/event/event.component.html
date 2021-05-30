@@ -1,3 +1,4 @@
+<app-title [title]="title"></app-title>
 <div class="row">
   <label class="col-form-label">Filtro:</label>
   <div class="col-sm-2">
@@ -39,7 +40,7 @@
       <td>{{event.id}}</td>
       <td>{{event.subject}}</td>
       <td>{{event.local}}</td>
-      <td>{{event.date | DateTimeFormatPipe}}</td>
+      <td>{{event.date}}</td>
       <td>{{event.amount}}</td>
       <td>
         <div *ngIf="!event.lots.length">
@@ -61,7 +62,7 @@
       </td>
     </tr>
   </tbody>
-  <tfoot *ngIf="!events || !events.length">
+  <tfoot *ngIf="!events">
     <tr>
       <td colspan="7" class="text-center">
         <h5>
@@ -110,7 +111,8 @@
             </div>
             <div class="form-group col-md-4">
               <label>Data e Hora</label>
-              <input type="text" bsDatepicker [bsConfig]="{dateInputFormat : 'DD/MM/YYY hh:mm a'}"
+              <input type="text" bsDatepicker
+                [bsConfig]="{ dateInputFormat : 'DD/MM/YYY hh:mm a' }"
                 class="form-control is-invalid" formControlName="date" placeholder=" Informe o Data e Hora"
                 [ngClass]="{'is-invalid' : !registerForm.controls.date.valid && registerForm.controls.date.touched}">
               <div class="invalid-feedback">

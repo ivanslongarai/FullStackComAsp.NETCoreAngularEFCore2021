@@ -3,6 +3,8 @@
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
 
-.myMargin {
-  margin-right: 10px;
+#toast-container > div {
+  opacity: 1;
 }
+
+

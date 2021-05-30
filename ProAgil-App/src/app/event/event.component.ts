@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { EventService } from '../_services/Event.service';
 import { Event } from '../_models/Event';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsLocaleService, } from 'ngx-bootstrap/datepicker';
@@ -21,13 +20,13 @@ export class EventComponent implements OnInit {
   registerForm!: FormGroup;
   saveMode = "";
   bodyDeleteEvent = "";
+  title = "Eventos";
 
   actualDate = '';
   _filterList = '';
 
   constructor(
     private eventService: EventService,
-    private modalService: BsModalService,
     private toastr: ToastrService,
     private LocaleService: BsLocaleService,
   )
@@ -85,7 +84,9 @@ export class EventComponent implements OnInit {
       () => {
           template.hide();
           this.getEvents();
+          this.toastr.success('Excluído com sucesso');
         }, error => {
+          this.toastr.error(`Erro ao excluir: ${error}`);
           console.log(error);
         }
     );
@@ -100,7 +101,9 @@ export class EventComponent implements OnInit {
           console.log(this.event);
               template.hide();
               this.getEvents();
+              this.toastr.success('Inserido com sucesso!');
             }, error => {
+              this.toastr.error(`Erro ao inserir: ${error}`);
               console.log(error)
             }
         );
@@ -112,7 +115,9 @@ export class EventComponent implements OnInit {
         this.eventService.putEvent(this.event).subscribe(newEvent => {
               template.hide();
               this.getEvents();
+              this.toastr.success('Editado com sucesso!');
             }, error => {
+              this.toastr.error(`Erro ao editar: ${error}`);
               console.log(error)
             }
         );
@@ -154,7 +159,7 @@ export class EventComponent implements OnInit {
         console.log(this.events);
       },
       (error) => {
-        this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
+        this.toastr.error(`Erro ao tentar carregar eventos: ${error}`);
       }
     );
   }
