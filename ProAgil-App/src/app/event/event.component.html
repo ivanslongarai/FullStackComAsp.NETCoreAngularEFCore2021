@@ -34,7 +34,8 @@
   <tbody *ngIf="events && events.length">
     <tr *ngFor="let event of filteredEvents">
       <td>
-        <img *ngIf="showImages" src="http://localhost:5000/img/{{event.imageUrl}}" [style.width.px]="imageWidth"
+        <img *ngIf="showImages" src="http://localhost:5000/resources/images/{{event.imageUrl}}?_ts={{actualDate}}"
+          [style.width.px]="imageWidth"
           [style.margin.px]="imageMargin">
       </td>
       <td>{{event.id}}</td>
@@ -52,7 +53,7 @@
       </td>
       <td>
         <div class="btn-group">
-          <button class="btn btn-sm btn-primary" tooltip="Editar" (click)="editEvent(event, template)">
+          <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editEvent(event, template)">
             <i class="fa fa-edit"></i>
           </button>
           <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="deleteEvent(event, confirm)">
@@ -138,9 +139,17 @@
             </div>
             <div class="form-group col-md-6">
               <label>Imagem</label>
-              <input type="url" class="form-control is-invalid" formControlName="imageUrl"
-                placeholder=" Informe o ulr da Imagem"
-                [ngClass]="{'is-invalid' : !registerForm.controls.imageUrl.valid && registerForm.controls.imageUrl.touched}">
+              <table>
+                <tr>
+                  <td>
+                    <button class="btn btn-success" (click)="file.click()">Enviar Imagem</button>
+                    <input type="file" #file class="form-control is-invalid" formControlName="imageUrl"
+                      placeholder=" Informe o ulr da Imagem"
+                      [ngClass]="{'is-invalid' : !registerForm.controls.imageUrl.valid && registerForm.controls.imageUrl.touched}"
+                      (change)="onFileChange($event)" style="display: none">
+                  </td>
+                </tr>
+              </table>
               <div class="invalid-feedback">
                 Imagem é obrigatório
               </div>
