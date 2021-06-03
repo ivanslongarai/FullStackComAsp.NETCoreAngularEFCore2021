@@ -5,12 +5,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgxMaskModule } from 'ngx-mask';
 //Services
 import { EventService } from './_services/Event.service';
 
@@ -33,6 +34,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { DateTimeFormatPipePipe } from './_helpers/DateTimeFormatPipe.pipe';
 import { UserComponent } from './user/user.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { EventEditComponent } from './event/eventedit/eventedit.component';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -41,6 +43,7 @@ defineLocale('pt-br', ptBrLocale);
   declarations: [
     AppComponent,
     EventComponent,
+    EventEditComponent,
     NavComponent,
     SpeakerComponent,
     DashboardComponent,
@@ -58,6 +61,8 @@ defineLocale('pt-br', ptBrLocale);
     FormsModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    NgxMaskModule.forRoot(),
+    TabsModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     ToastrModule.forRoot({
