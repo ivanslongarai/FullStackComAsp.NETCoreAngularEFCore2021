@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Event } from '../_models/Event';
@@ -9,7 +9,8 @@ import { Event } from '../_models/Event';
 export class EventService {
   baseUrl = 'http://localhost:5000/api/event';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    }
 
   getAllEvents() : Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl);

@@ -1,7 +1,7 @@
 //Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -22,6 +22,8 @@ import { SpeakerComponent } from './speaker/speaker.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContactComponent } from './contact/contact.component';
 import { TitleComponent } from "./_shared/title/title.component";
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
 
 //Locale
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -29,6 +31,8 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 
 //Pipes
 import { DateTimeFormatPipePipe } from './_helpers/DateTimeFormatPipe.pipe';
+import { UserComponent } from './user/user.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -38,11 +42,14 @@ defineLocale('pt-br', ptBrLocale);
     AppComponent,
     EventComponent,
     NavComponent,
-    DateTimeFormatPipePipe,
     SpeakerComponent,
     DashboardComponent,
     ContactComponent,
-    TitleComponent
+    TitleComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
+    DateTimeFormatPipePipe,
    ],
   imports: [
     BrowserModule,
@@ -61,7 +68,7 @@ defineLocale('pt-br', ptBrLocale);
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [EventService],
+  providers: [EventService, {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi : true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
